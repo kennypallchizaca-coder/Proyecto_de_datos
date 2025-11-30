@@ -1,12 +1,26 @@
--- TABLA DE HECHOS
+-- Tabla de hechos para el modelo de pedidos
 CREATE TABLE Fact_Ventas (
-    VentaID INT PRIMARY KEY,
-    ProductoID INT,
-    TiempoID INT,
-    PedidoID INT,
-    CantidadVendida INT,
-
-    FOREIGN KEY (ProductoID) REFERENCES Dim_Producto(ProductoID),
-    FOREIGN KEY (TiempoID) REFERENCES Dim_Tiempo(TiempoID),
-    FOREIGN KEY (PedidoID) REFERENCES Dim_Pedidos(PedidoID)
+    FactVentaKey BIGINT IDENTITY(1,1) PRIMARY KEY,
+    PedidoID INT NOT NULL,
+    Linea INT NOT NULL,
+    TiempoKey INT NOT NULL,
+    ProductoKey INT NOT NULL,
+    ClienteKey INT NOT NULL,
+    EmpleadoKey INT NOT NULL,
+    ProveedorKey INT NOT NULL,
+    PagoKey INT NOT NULL,
+    UbicacionKey INT NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+    ImporteBruto DECIMAL(14,2) NOT NULL,
+    ImporteIVA DECIMAL(14,2) NOT NULL,
+    ImporteTotal DECIMAL(14,2) NOT NULL,
+    CONSTRAINT UQ_Fact_Venta UNIQUE (PedidoID, Linea),
+    CONSTRAINT FK_Fact_Tiempo FOREIGN KEY (TiempoKey) REFERENCES Dim_Tiempo(TiempoKey),
+    CONSTRAINT FK_Fact_Producto FOREIGN KEY (ProductoKey) REFERENCES Dim_Producto(ProductoKey),
+    CONSTRAINT FK_Fact_Cliente FOREIGN KEY (ClienteKey) REFERENCES Dim_Cliente(ClienteKey),
+    CONSTRAINT FK_Fact_Empleado FOREIGN KEY (EmpleadoKey) REFERENCES Dim_Empleado(EmpleadoKey),
+    CONSTRAINT FK_Fact_Proveedor FOREIGN KEY (ProveedorKey) REFERENCES Dim_Proveedor(ProveedorKey),
+    CONSTRAINT FK_Fact_Pago FOREIGN KEY (PagoKey) REFERENCES Dim_Pago(PagoKey),
+    CONSTRAINT FK_Fact_Ubicacion FOREIGN KEY (UbicacionKey) REFERENCES Dim_Ubicacion(UbicacionKey)
 );
